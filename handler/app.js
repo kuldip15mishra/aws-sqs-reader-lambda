@@ -1,5 +1,6 @@
 exports.handler = async function (event, context, callback) {
     let arrItems = [4, 5, 6, 8, 9, 10, 35, 70, 80, 31];
+    console.log("start code")
     function countevennumbers(items) {
         return new Promise(resolve => {
             setTimeout(() => {
