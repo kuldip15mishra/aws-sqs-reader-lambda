@@ -16,28 +16,19 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} 
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - name: npm install
-        env:
-          CI: true
-        run: |
-          npm i 
-      - name: deploy
-        run: |
-          zip -j deploy.zip ./* #--> Zip the Code As we know lambda function accept the zip file.
-          aws lambda update-function-code --function-name=test --zip-file=fileb://deploy.zip 
-# At last the AWS CLI command to Update the Zip file with existing One (With Correct Function Name)
-  # deploy_source:
-  #   name: deploy lambda from source
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: checkout source code
-  #       uses: actions/checkout@v3
-  #     - name: default deploy
-  #       if: github.ref == 'refs/heads/develop'
-  #       uses: appleboy/lambda-action@v0.1.9
-  #       with:
-  #         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws_region: ${{ secrets.AWS_REGION }}
-  #         function_name: test
-  #         source: handler/app.js
+      - name: serverless deploy
+        uses: serverless/github-action@v3.1
+        with:
+          args: deploy
+      #   env:
+      #     CI: true
+      #   run: |
+      #     npm i 
+      # - name: deploy
+      #   run: |
+      #     zip -j deploy.zip ./* #--> Zip the Code As we know lambda function accept the zip file.
+      #     aws lambda update-function-code --function-name=test --zip-file=fileb://deploy.zip 
+      # - name: serverless deploy
+      #     uses: serverless/github-action@v3.1
+      #     with:
+      #       args: deploy
