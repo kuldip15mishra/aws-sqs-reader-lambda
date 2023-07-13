@@ -14,6 +14,7 @@ exports.handler = async function (event, context, callback) {
             }, 2000);
         });
     }
+    console.log("Code deployed")
     let evennumber = await countevennumbers(arrItems);
     callback(null, 'even numbers equals =' + evennumber);
 };
